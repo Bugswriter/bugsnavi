@@ -1,0 +1,78 @@
+#+TITLE: bugs navi OS
+#+AUTHOR: Suraj Kushwah
+
+Navi (aka. bugsnavi) is a Auto Rice Bootstrapping script of [[https://bugswriter.com][bugswriter]].
+Navi is a minimal script that will provide a fully-featured terminal based
+OS.
+
+I am writing this because I got bored with installing arch linux manually
+All my friends keep asking me to make their systems exactly like me.
+This is why I end up writing this script to make things quicker for me.
+
+* Stage 0
+First we have to get prepare for Arch installtion. Lets call it stage 0.
+Reference: https://wiki.archlinux.org/title/installation_guide
+#+begin_src sh
+  echo "=== Welcome to navi OS installer script ==="
+  echo "> Please make sure your internet is connected"
+#+end_src
+
+** Partition the disks
+First and very important thing is making partition.
+If you are intending to wipe your hard drive and install linux.
+Then usually what I do is -
+- =/dev/sda1= for efi (520mb)
+- =/dev/sda2= for linux. (rest)
+We are going to use =cfdisk= to make partition.
+No need to create a new efi partition if it exist, unless you want to.
+#+begin_src sh
+  echo "Checkout your drive names"
+  lsblk
+  echo "Enter the complete drive name (eg. /dev/sda)"
+  read drive
+  cfdisk $drive
+#+end_src
+
+** Format the partitions
+Now I assume you managed to create your linux and efi partition correctly.
+- Now we have to give our linux partition =ext4= format.
+- and our efi parition =fat32= format. (only if efi is made).
+#+begin_src sh
+  echo "Enter the complete name of linux partition you made (eg. /dev/sda1): "
+  read partition
+  mkfs.ext4 $partition
+  read -p "Did you also create efi partition? [y/n]" answer
+  if [[ $answer = y ]] ; then
+      echo "Enter the full name of EFI partition (eg. /dev/sda2): "
+      read efipartition
+      mkfs.vfat -F 32 $efipartition
+  fi
+#+end_src
+** Mount and Install
+It's time to mount our brand new and empty linux partition we made. So we can
+install our hot new arch linux kernel and packages.
+#+begin_src sh
+  mount $partition /mnt
+  pacstrap /mnt base base-devel linux linux-firmware
+  genfstab -U /mnt >> /mnt/etc/fstab  
+#+end_src
+** Chroot Hack
+So right now we are in our arch image system. But in order to configure our new
+installation we have to change our root to new linux partition. For that we
+have to use =arch-chroot=. But since we are running commands from script.
+If we do chroot, we won't be able to run commands.
+One solution for this is just use =arch-chroot /mnt <command>=. This will
+chroot - run command - exit.
+We also have to type =arch-chroot /mnt= before every command.
+So what I did is. I am not going to exit out this shell script, but before
+exiting, we are gonna make a new shell script on =/mnt/= or for new system.
+The root (=/=). Then we will =arch-chroot /mnt ./new_script.sh=.
+#+begin_src sh
+  #stage1
+  sed '1,/^#stage1$/d' `basename $0` > /mnt/stage1.sh
+  chmod +x /mnt/stage1.sh
+  arch-chroot /mnt ./stage1.sh
+  exit
+#+end_src
+
+
