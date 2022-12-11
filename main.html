@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-11-27 Sun 18:14 -->
+<!-- 2022-12-11 Sun 19:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>bugs navi OS</title>
+<title>Bugs Navi OS</title>
 <meta name="author" content="Suraj Kushwah" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -196,17 +196,57 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">bugs navi OS</h1>
+<h1 class="title">Bugs Navi OS</h1>
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org9170ce9">1. Stage 0</a>
+<li><a href="#orgf2b7966">1. Stage 0</a>
 <ul>
-<li><a href="#org0d36acf">1.1. Partition the disks</a></li>
-<li><a href="#org6f0bdff">1.2. Format the partitions</a></li>
-<li><a href="#orga0dbb44">1.3. Mount and Install</a></li>
-<li><a href="#orgb814880">1.4. Chroot Hack</a></li>
+<li><a href="#org5c2dccb">1.1. Partition the disks</a></li>
+<li><a href="#org63a00a3">1.2. Format the partitions</a></li>
+<li><a href="#orgd8842af">1.3. Mount and Install</a></li>
+<li><a href="#org026adbc">1.4. Chroot Hack</a></li>
+</ul>
+</li>
+<li><a href="#org952fe9e">2. Stage 1</a>
+<ul>
+<li><a href="#org131572a">2.1. Parallel Download</a></li>
+<li><a href="#org71aefc9">2.2. Time</a></li>
+<li><a href="#orgbd34457">2.3. Locale</a></li>
+<li><a href="#orgb298758">2.4. Hostname</a></li>
+<li><a href="#orge6d3abf">2.5. Network Config</a></li>
+<li><a href="#orgac4cb60">2.6. Initramfs</a></li>
+<li><a href="#orgfe517a7">2.7. Root Password</a></li>
+<li><a href="#org55e227b">2.8. Bootloader</a></li>
+<li><a href="#org33863b6">2.9. Installing Programs</a>
+<ul>
+<li><a href="#org0747d80">2.9.1. Softwares</a></li>
+<li><a href="#orgd1d0220">2.9.2. Utilies</a></li>
+</ul>
+</li>
+<li><a href="#orgb2956de">2.10. Default Shell</a></li>
+<li><a href="#orgcf9817b">2.11. New User</a></li>
+<li><a href="#org1450104">2.12. Setting up for next stage</a></li>
+<li><a href="#org2b8e777">2.13. Sudo Access</a></li>
+</ul>
+</li>
+<li><a href="#orge15d872">3. Stage 2</a>
+<ul>
+<li><a href="#orgd493cde">3.1. Dotfiles</a></li>
+<li><a href="#org4ffc9c7">3.2. Suckless</a>
+<ul>
+<li><a href="#orgcf870b0">3.2.1. Window Manager</a></li>
+<li><a href="#org59a0999">3.2.2. Terminal</a></li>
+<li><a href="#org8399660">3.2.3. Menu</a></li>
+</ul>
+</li>
+<li><a href="#org48ae8fc">3.3. Status Bar</a></li>
+<li><a href="#orgab8f21c">3.4. Password Prompt</a></li>
+<li><a href="#org94e54a3">3.5. AUR Helper</a></li>
+<li><a href="#org766d330">3.6. Some AUR Packages</a></li>
+<li><a href="#org592d14f">3.7. Clean Up</a></li>
+<li><a href="#org112c885">3.8. Oh My ZSH</a></li>
 </ul>
 </li>
 </ul>
@@ -224,11 +264,11 @@ All my friends keep asking me to make their systems exactly like me.
 This is why I end up writing this script to make things quicker for me.
 </p>
 
-<div id="outline-container-org9170ce9" class="outline-2">
-<h2 id="org9170ce9"><span class="section-number-2">1.</span> Stage 0</h2>
+<div id="outline-container-orgf2b7966" class="outline-2">
+<h2 id="orgf2b7966"><span class="section-number-2">1.</span> Stage 0</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-First we have to get prepare for Arch installtion. Lets call it stage 0.
+First we have to get prepare for Arch installation. Lets call it stage 0.
 Reference: <a href="https://wiki.archlinux.org/title/installation_guide">https://wiki.archlinux.org/title/installation_guide</a>
 </p>
 <div class="org-src-container">
@@ -238,8 +278,8 @@ echo "&gt; Please make sure your internet is connected"
 </div>
 </div>
 
-<div id="outline-container-org0d36acf" class="outline-3">
-<h3 id="org0d36acf"><span class="section-number-3">1.1.</span> Partition the disks</h3>
+<div id="outline-container-org5c2dccb" class="outline-3">
+<h3 id="org5c2dccb"><span class="section-number-3">1.1.</span> Partition the disks</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 First and very important thing is making partition.
@@ -265,8 +305,8 @@ cfdisk $drive
 </div>
 </div>
 
-<div id="outline-container-org6f0bdff" class="outline-3">
-<h3 id="org6f0bdff"><span class="section-number-3">1.2.</span> Format the partitions</h3>
+<div id="outline-container-org63a00a3" class="outline-3">
+<h3 id="org63a00a3"><span class="section-number-3">1.2.</span> Format the partitions</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Now I assume you managed to create your linux and efi partition correctly.
@@ -289,8 +329,8 @@ fi
 </div>
 </div>
 </div>
-<div id="outline-container-orga0dbb44" class="outline-3">
-<h3 id="orga0dbb44"><span class="section-number-3">1.3.</span> Mount and Install</h3>
+<div id="outline-container-orgd8842af" class="outline-3">
+<h3 id="orgd8842af"><span class="section-number-3">1.3.</span> Mount and Install</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 It's time to mount our brand new and empty linux partition we made. So we can
@@ -304,8 +344,8 @@ genfstab -U /mnt &gt;&gt; /mnt/etc/fstab
 </div>
 </div>
 </div>
-<div id="outline-container-orgb814880" class="outline-3">
-<h3 id="orgb814880"><span class="section-number-3">1.4.</span> Chroot Hack</h3>
+<div id="outline-container-org026adbc" class="outline-3">
+<h3 id="org026adbc"><span class="section-number-3">1.4.</span> Chroot Hack</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 So right now we are in our arch image system. But in order to configure our new
@@ -320,8 +360,7 @@ exiting, we are gonna make a new shell script on <code>/mnt/</code> or for new s
 The root (<code>/</code>). Then we will <code>arch-chroot /mnt ./new_script.sh</code>.
 </p>
 <div class="org-src-container">
-<pre class="src src-sh">#stage1
-sed '1,/^#stage1$/d' `basename $0` &gt; /mnt/stage1.sh
+<pre class="src src-sh">sed '1,/^#stage1$/d' `basename $0` &gt; /mnt/stage1.sh
 chmod +x /mnt/stage1.sh
 arch-chroot /mnt ./stage1.sh
 exit
@@ -330,10 +369,496 @@ exit
 </div>
 </div>
 </div>
+
+<div id="outline-container-org952fe9e" class="outline-2">
+<h2 id="org952fe9e"><span class="section-number-2">2.</span> Stage 1</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+At this point your script is finished executing stage 0.
+Which means our base system is installed, stage 1 will mostly be about
+configurations.
+</p>
+</div>
+
+<div id="outline-container-org131572a" class="outline-3">
+<h3 id="org131572a"><span class="section-number-3">2.1.</span> Parallel Download</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+The package manager of Arch is <code>pacman</code>. Pacman now provide a feature
+of downloading packages parallely, it's good and fast so lets do this.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">pacman -S --noconfirm sed
+sed -i "s/^#ParallelDownloads = 5$/ParallelDownloads = 15/" /etc/pacman.conf  
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org71aefc9" class="outline-3">
+<h3 id="org71aefc9"><span class="section-number-3">2.2.</span> Time</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Time to setup time, for my system, So I can always keep track of time.
+so do my programs.
+</p>
+
+<div id="org2acd78b" class="figure">
+<p><img src="https://www.magicalquote.com/wp-content/uploads/2016/07/Whiterose-season-1.jpg" alt="Whiterose-season-1.jpg" />
+</p>
+<p><span class="figure-number">Figure 1: </span>I love whiterose. (Mr. Robot)</p>
+</div>
+<div class="org-src-container">
+<pre class="src src-sh">ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
+hwclock --systohc  
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbd34457" class="outline-3">
+<h3 id="orgbd34457"><span class="section-number-3">2.3.</span> Locale</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+A locale consists of a number of categories for which country-dependent
+formatting or other specifications exist. We are going to use <code>UTF-8</code>.
+We are also going to use <code>us</code>, keymap.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">echo "en_US.UTF-8 UTF-8" &gt;&gt; /etc/locale.gen
+locale-gen
+echo "LANG=en_US.UTF-8" &gt; /etc/locale.conf
+echo "KEYMAP=us" &gt; /etc/vconsole.conf
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb298758" class="outline-3">
+<h3 id="orgb298758"><span class="section-number-3">2.4.</span> Hostname</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Hostname is the computer name, most people name their computer any random
+crap. But I like to call my computer <i>mundus</i>. When you open your terminal
+you will see <code>yourusername@yourhostname</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">echo "Hostname: "
+read hostname
+echo $hostname &gt; /etc/hostname
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge6d3abf" class="outline-3">
+<h3 id="orge6d3abf"><span class="section-number-3">2.5.</span> Network Config</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+Lets create hostname file. My <code>127.0.0.1</code> is aliased to localhost.
+Like any other normal person.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">echo "127.0.0.1       localhost" &gt;&gt; /etc/hosts
+echo "::1             localhost" &gt;&gt; /etc/hosts
+echo "127.0.1.1       $hostname.localdomain $hostname" &gt;&gt; /etc/hosts
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgac4cb60" class="outline-3">
+<h3 id="orgac4cb60"><span class="section-number-3">2.6.</span> Initramfs</h3>
+<div class="outline-text-3" id="text-2-6">
+<p>
+Creating a new initramfs is usually not required, because mkinitcpio
+was run on installation of the kernel package with pacstrap. 
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">mkinitcpio -P
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfe517a7" class="outline-3">
+<h3 id="orgfe517a7"><span class="section-number-3">2.7.</span> Root Password</h3>
+<div class="outline-text-3" id="text-2-7">
+<p>
+Now lets set root password, root password and user password is supposed to
+be different. But I like to keep it same for simpilicity. But we will worry
+about this later, when we make a user.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">passwd
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org55e227b" class="outline-3">
+<h3 id="org55e227b"><span class="section-number-3">2.8.</span> Bootloader</h3>
+<div class="outline-text-3" id="text-2-8">
+<p>
+Bootloader is probably the most annoying thing for new linux users.
+Here, lets install grub. Notice I am highly assuming you have UEFI
+partition, if you don't good luck. In last 5 years almost every
+computer have UEFI BOIS.
+I have no reason to wait&#x2026; I don't have dual boot. So I will remove
+the grub wait time.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">pacman --noconfirm -S grub efibootmgr os-prober
+echo "Enter EFI partition: " 
+read efipartition
+mkdir /boot/efi
+mount $efipartition /boot/efi 
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+sed -i 's/quiet/pci=noaer/g' /etc/default/grub
+sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
+grub-mkconfig -o /boot/grub/grub.cfg
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org33863b6" class="outline-3">
+<h3 id="org33863b6"><span class="section-number-3">2.9.</span> Installing Programs</h3>
+<div class="outline-text-3" id="text-2-9">
+<p>
+It's time to make Navi an OS which one can use daily, every single program this
+script will install the best tools one could find for various purposes.
+Keep in mind Navi is 90% CLI based OS. So almost every tool we will install
+is also CLI based. The only true exceptions are just <code>browser</code>.
+</p>
+</div>
+
+<div id="outline-container-org0747d80" class="outline-4">
+<h4 id="org0747d80"><span class="section-number-4">2.9.1.</span> Softwares</h4>
+<div class="outline-text-4" id="text-2-9-1">
+<p>
+So lets install softwares for our daily purpose.
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Package</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">qutebrowser</td>
+<td class="org-left">A keyboard-driven, vim-like browser based on PyQt5</td>
+</tr>
+
+<tr>
+<td class="org-left">sxiv</td>
+<td class="org-left">Simple X Image Viewer</td>
+</tr>
+
+<tr>
+<td class="org-left">zathura</td>
+<td class="org-left">Minimalistic document viewer</td>
+</tr>
+
+<tr>
+<td class="org-left">mpv</td>
+<td class="org-left">A free, open source, and cross-platform media player</td>
+</tr>
+
+<tr>
+<td class="org-left">mpd</td>
+<td class="org-left">Flexible, powerful, server-side application for playing music</td>
+</tr>
+
+<tr>
+<td class="org-left">irssi</td>
+<td class="org-left">Modular text mode IRC client with Perl scripting</td>
+</tr>
+
+<tr>
+<td class="org-left">ncmpcpp</td>
+<td class="org-left">Fully featured MPD client which runs in a terminal</td>
+</tr>
+
+<tr>
+<td class="org-left">tremc</td>
+<td class="org-left">A TUI Client for transmission daemon</td>
+</tr>
+
+<tr>
+<td class="org-left">newsboat</td>
+<td class="org-left">An RSS/Atom feed reader for text terminals</td>
+</tr>
+
+<tr>
+<td class="org-left">ytfzf</td>
+<td class="org-left">Find and watch youtube videos from the terminal</td>
+</tr>
+
+<tr>
+<td class="org-left">lf</td>
+<td class="org-left">Terminal based simple, vim-like file manager</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<pre class="src src-sh">pacman -S --noconfirm \
+       qutebrowser \
+       sxiv \
+       zathura \
+       mpv \
+       mpd \
+       lf \
+       ncmpcpp \
+       git \
+       ytfzf \
+       tremc \
+       irssi \
+       newsboat \
+       neomutt \
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd1d0220" class="outline-4">
+<h4 id="orgd1d0220"><span class="section-number-4">2.9.2.</span> Utilies</h4>
+</div>
+</div>
+
+<div id="outline-container-orgb2956de" class="outline-3">
+<h3 id="orgb2956de"><span class="section-number-3">2.10.</span> Default Shell</h3>
+<div class="outline-text-3" id="text-2-10">
+<p>
+Dash is a fast and minimal shell. Dash deserve to be my bourne shell. 
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">rm /bin/sh
+ln -s dash /bin/sh  
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcf9817b" class="outline-3">
+<h3 id="orgcf9817b"><span class="section-number-3">2.11.</span> New User</h3>
+<div class="outline-text-3" id="text-2-11">
+<p>
+Lets create a new user for our system.
+Also make sure to add him in wheel group. wheel is a group in arch
+linux which get sudo permission. So by putting our user in wheel group
+we allow our user to use sudo no password.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">echo "Enter Username: "
+read username
+useradd -m -G wheel -s /bin/zsh $username
+echo "%wheel ALL=(ALL) NOPASSWD: ALL" &gt;&gt; /etc/sudoers
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1450104" class="outline-3">
+<h3 id="org1450104"><span class="section-number-3">2.12.</span> Setting up for next stage</h3>
+<div class="outline-text-3" id="text-2-12">
+<div class="org-src-container">
+<pre class="src src-sh">echo "Pre-Installation Finish Reboot now"
+ai3_path=/home/$username/arch_install3.sh
+sed '1,/^#part3$/d' arch_install2.sh &gt; $ai3_path
+chown $username:$username $ai3_path
+chmod +x $ai3_path
+su -c $ai3_path -s /bin/sh $username
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2b8e777" class="outline-3">
+<h3 id="org2b8e777"><span class="section-number-3">2.13.</span> Sudo Access</h3>
+<div class="outline-text-3" id="text-2-13">
+<p>
+Adding our user to 
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge15d872" class="outline-2">
+<h2 id="orge15d872"><span class="section-number-2">3.</span> Stage 2</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgd493cde" class="outline-3">
+<h3 id="orgd493cde"><span class="section-number-3">3.1.</span> Dotfiles</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Dotfiles are basically the settings for all the programs we have
+installed, I use git to manage my dotfiles. All we have to do is close
+my dotfiles and that's it.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">#part3  
+cd $HOME
+git clone --separate-git-dir=$HOME/.dotfiles https://github.com/bugswriter/dotfiles.git tmpdotfiles
+rsync --recursive --verbose --exclude '.git' tmpdotfiles/ $HOME/
+rm -r tmpdotfiles
+alias dots='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+dots config --local status.showUntrackedFiles no  
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4ffc9c7" class="outline-3">
+<h3 id="org4ffc9c7"><span class="section-number-3">3.2.</span> Suckless</h3>
+<div class="outline-text-3" id="text-3-2">
+</div>
+<div id="outline-container-orgcf870b0" class="outline-4">
+<h4 id="orgcf870b0"><span class="section-number-4">3.2.1.</span> Window Manager</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<p>
+I'm addicted to suckless's dwm. I find dwm very solid and simple. It
+just works for me. I have my custom keybindings and I am addicted to
+it now. I don't use many patches. I like to keep things simple. It
+fits well with unix philosophy.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">git clone --depth=1 https://github.com/Bugswriter/dwm.git ~/.local/src/dwm
+sudo make -C ~/.local/src/dwm install
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org59a0999" class="outline-4">
+<h4 id="org59a0999"><span class="section-number-4">3.2.2.</span> Terminal</h4>
+<div class="outline-text-4" id="text-3-2-2">
+<p>
+Terminal is crucial to use our OS. Again we are going to go with
+suckless. Suckless's simple terminal (aka. st) works fine I prefer
+luke smith fork. It comes with some additional goodies.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">git clone --depth=1 https://github.com/Bugswriter/st.git ~/.local/src/st
+sudo make -C ~/.local/src/st install  
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8399660" class="outline-4">
+<h4 id="org8399660"><span class="section-number-4">3.2.3.</span> Menu</h4>
+<div class="outline-text-4" id="text-3-2-3">
+<p>
+We need a menu for not just opening a program but many other purposes
+(example - system menu). Dmenu is a perfect all in one thing for that.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">git clone --depth=1 https://github.com/Bugswriter/dmenu.git ~/.local/src/dmenu
+sudo make -C ~/.local/src/dmenu install
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org48ae8fc" class="outline-3">
+<h3 id="org48ae8fc"><span class="section-number-3">3.3.</span> Status Bar</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+We are gonna use dwmblocks with our dwm for easily managing our status
+bar.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">git clone --depth=1 https://github.com/bugswriter/dwmblocks.git ~/.local/src/dwmblocks
+sudo make -C ~/.local/src/dwmblocks install
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgab8f21c" class="outline-3">
+<h3 id="orgab8f21c"><span class="section-number-3">3.4.</span> Password Prompt</h3>
+<div class="outline-text-3" id="text-3-4">
+<div class="org-src-container">
+<pre class="src src-sh"># dmenu: Dmenu based Password Prompt
+git clone --depth=1 https://github.com/ritze/pinentry-dmenu.git ~/.local/src/pinentry-dmenu
+sudo make -C ~/.local/src/pinentry-dmenu clean install
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org94e54a3" class="outline-3">
+<h3 id="org94e54a3"><span class="section-number-3">3.5.</span> AUR Helper</h3>
+<div class="outline-text-3" id="text-3-5">
+<div class="org-src-container">
+<pre class="src src-sh">git clone https://aur.archlinux.org/pikaur.git
+cd pikaur
+makepkg -fsri
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org766d330" class="outline-3">
+<h3 id="org766d330"><span class="section-number-3">3.6.</span> Some AUR Packages</h3>
+<div class="outline-text-3" id="text-3-6">
+<div class="org-src-container">
+<pre class="src src-sh">cd
+pikaur -S libxft-bgra-git yt-dlp-drop-in
+mkdir dl dox imp music pix pub code
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org592d14f" class="outline-3">
+<h3 id="org592d14f"><span class="section-number-3">3.7.</span> Clean Up</h3>
+<div class="outline-text-3" id="text-3-7">
+<p>
+Config file of xinit (i.e <code>.xinitrc</code>) and .zprofile needs to go on
+home. But for sake of cleanup in my dotfiles I keep it insite
+<code>~/.config</code>. Here we can create symbolic links for best of the both
+worlds.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">ln -s ~/.config/x11/xinitrc .xinitrc
+ln -s ~/.config/shell/profile .zprofile
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org112c885" class="outline-3">
+<h3 id="org112c885"><span class="section-number-3">3.8.</span> Oh My ZSH</h3>
+<div class="outline-text-3" id="text-3-8">
+<p>
+I know it's not cool to use it. But I use it.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+mv ~/.oh-my-zsh ~/.config/zsh/oh-my-zsh
+rm ~/.zshrc ~/.zsh_history  
+</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Suraj Kushwah</p>
-<p class="date">Created: 2022-11-27 Sun 18:14</p>
+<p class="date">Created: 2022-12-11 Sun 19:51</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
